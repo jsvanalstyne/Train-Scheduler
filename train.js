@@ -55,10 +55,18 @@ var train = $("<td>");
 var destination = $("<td>");
 var time = $("<td>");
 var frequency = $("<td>");
+var nextTrain = $("<td>");
+var firstTrain = moment(trainData.trainTime, "HH:mm").subtract(1, "years");
+var currentTime = moment();
+var diffTime = moment().diff(moment(firstTrain), "minutes");
+var tRemainder = diffTime % trainData.trainFrequency;
+var tMinutesTillTrain = trainData.trainFrequency - tRemainder;
+var nextTrainTime = moment().add(tMinutesTillTrain, "minutes");
 train.text(trainData.trainName);
 destination.text(trainData.destinationName);
 time.text(trainData.trainTime);
 frequency.text(trainData.trainFrequency)
-row.append(train, destination, frequency, time);
+nextTrain.text(nextTrainTime);
+row.append(train, destination, frequency, time, nextTrain);
 $(".table").append(row);
 }
