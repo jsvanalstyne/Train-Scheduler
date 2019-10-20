@@ -61,12 +61,12 @@ var currentTime = moment();
 var diffTime = moment().diff(moment(firstTrain), "minutes");
 var tRemainder = diffTime % trainData.trainFrequency;
 var tMinutesTillTrain = trainData.trainFrequency - tRemainder;
-var nextTrainTime = moment().add(tMinutesTillTrain, "minutes");
+// var nextTrainTime = moment().add(tMinutesTillTrain, "minutes");
 train.text(trainData.trainName);
 destination.text(trainData.destinationName);
 time.text(trainData.trainTime);
 frequency.text(trainData.trainFrequency)
-nextTrain.text(nextTrainTime);
+nextTrain.text(tMinutesTillTrain);
 row.append(train, destination, frequency, time, nextTrain);
 $(".table").append(row);
 }
