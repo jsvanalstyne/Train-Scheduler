@@ -17,10 +17,10 @@ console.log(trainInput);
 var destinationInput = $("#destination-input");
 console.log(destinationInput);
 var trainTimeInput = $("#trainTime-input");
-console.log(trainTimeInput);
+// console.log(trainTimeInput);
 var frequencyInput = $("#frequency-input");
-console.log(frequencyInput);
-console.log("working");
+// console.log(frequencyInput);
+// console.log("working");
 
 $("#addTrain").on("click", function (event) {
     console.log("add input");
@@ -29,10 +29,10 @@ $("#addTrain").on("click", function (event) {
     var destinationName = $("#destination-input").val().trim();
     var trainTime = $("#trainTime-input").val().trim();
     var trainFrequency = $("#frequency-input").val().trim();
-    console.log(trainName);
-    console.log(destinationName);
-    console.log(trainFrequency);
-    console.log(trainTime);
+    // console.log(trainName);
+    // console.log(destinationName);
+    // console.log(trainFrequency);
+    // console.log(trainTime);
     
     database.ref().push({
         trainName: trainName,
@@ -45,7 +45,7 @@ $("#addTrain").on("click", function (event) {
 
 });
 database.ref().on("child_added", function(snapshot){
-    console.log("childadded")
+    // console.log("childadded")
 var sv = snapshot.val();
 addRow(sv);
 });
@@ -57,14 +57,21 @@ var time = $("<td>");
 var frequency = $("<td>");
 var nextTrain = $("<td>");
 var firstTrain = moment(trainData.trainTime, "HH:mm").subtract(1, "years");
-var currentTime = moment();
+
+console.log(firstTrain);
+var currentTime = moment().format('LT');
+console.log(currentTime);
 var diffTime = moment().diff(moment(firstTrain), "minutes");
 var tRemainder = diffTime % trainData.trainFrequency;
 var tMinutesTillTrain = trainData.trainFrequency - tRemainder;
-// var nextTrainTime = moment().add(tMinutesTillTrain, "minutes");
+var nextTrainTime = moment().add(tMinutesTillTrain, "minutes");
+var nextTrainFormat= moment(nextTrainTime).format('LT');
+// console.log(trainData);
+// console.log(trainTime);
+// console.log(nextTrainTime);
 train.text(trainData.trainName);
 destination.text(trainData.destinationName);
-time.text(trainData.trainTime);
+time.text(nextTrainFormat);
 frequency.text(trainData.trainFrequency)
 nextTrain.text(tMinutesTillTrain);
 row.append(train, destination, frequency, time, nextTrain);
